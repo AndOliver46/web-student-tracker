@@ -7,11 +7,10 @@
 
 <head>
 	<title>Student Tracker APP</title>
+	<link type="text/css" rel="stylesheet" href="./css/style.css">
 </head>
 
-<%
-	List<Student> students = (List<Student>)request.getAttribute("STUDENTS_LIST");
-%>
+<c:set var="students" value='<%= (List<Student>)request.getAttribute("STUDENTS_LIST") %>' />
 
 <body>
 
@@ -23,13 +22,13 @@
 
 <section id="container">
 	<div id="content">
-		<table border="1">
+		<table border="1" id="table">
 		<tr>
 			<th>First Name</th>
 			<th>Last Name</th>
 			<th>Email</th>
 		</tr>
-		<c:forEach var="student" items="<%= students %>">
+		<c:forEach var="student" items="${students}">
 			<tr>
 				<td>${student.getFirstName()}</td>
 				<td>${student.getLastName()}</td>
