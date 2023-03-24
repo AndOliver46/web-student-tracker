@@ -50,7 +50,7 @@ public class StudentDbUtil {
 		return students;
 	}
 
-	public void newStudent(String firstName, String lastName, String email) {
+	public void newStudent(Student student) {
 
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -59,9 +59,9 @@ public class StudentDbUtil {
 			conn = dataSource.getConnection();
 
 			ps = conn.prepareStatement("INSERT INTO student(first_name, last_name, email) VALUES (?, ?, ?)");
-			ps.setString(1, firstName);
-			ps.setString(2, lastName);
-			ps.setString(3, email);
+			ps.setString(1, student.getFirstName());
+			ps.setString(2, student.getLastName());
+			ps.setString(3, student.getEmail());
 
 			ps.executeUpdate();
 
