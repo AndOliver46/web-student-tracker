@@ -18,7 +18,7 @@ public class StudentDbUtil {
 		dataSource = theDataSource;
 	}
 
-	public List<Student> getStudents() throws Exception {
+	public List<Student> getStudents() {
 
 		List<Student> students = new ArrayList<>();
 
@@ -26,11 +26,11 @@ public class StudentDbUtil {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		conn = dataSource.getConnection();
-		ps = conn.prepareStatement("SELECT * FROM student");
-		rs = ps.executeQuery();
-
 		try {
+			conn = dataSource.getConnection();
+			ps = conn.prepareStatement("SELECT * FROM student");
+			rs = ps.executeQuery();
+			
 			while (rs.next()) {
 
 				Integer id = rs.getInt("id");
@@ -70,6 +70,39 @@ public class StudentDbUtil {
 		} finally {
 			close(null, ps, conn);
 		}
+	}
+
+	public Student loadStudent(Student student) {
+
+		Student newStudent = null;
+
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			conn = dataSource.getConnection();
+
+			ps = conn.prepareStatement("SELECT * FROM student WHERE id = ?");
+			ps.setInt(1, student.getId());
+			rs = ps.executeQuery();
+			
+			while (rs.next()) {
+
+				Integer id = rs.getInt("id");
+				String firstName = rs.getString("first_name");
+				String lastName = rs.getString("last_name");
+				String email = rs.getString("email");
+
+				newStudent = new Student(id, firstName, lastName, email);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rs, ps, conn);
+		}
+
+		return newStudent;
 	}
 
 	private void close(ResultSet rs, PreparedStatement ps, Connection conn) {

@@ -45,27 +45,47 @@ public class StudentControllerServlet extends HttpServlet {
 			
 			if(command == null) {
 				command = "LIST";
+				listStudents(request, response);
 			}
 
 			if (command.equals("ADD")) {
-				addNewStudent(request);
+				addStudent(request, response);
 			}
 			
-			listStudents(request, response);
-
+			if (command.equals("LOAD")) {
+				loadStudent(request, response);
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 	}
 
-	private void addNewStudent(HttpServletRequest request) {
+	private void loadStudent(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		String studentId = request.getParameter("studentId");
+		if(studentId != null) {
+			Integer id = Integer.parseInt(studentId);
+			Student student = new Student(id, null, null, null);
+			student = studentDbUtil.loadStudent(student);
+			
+			request.setAttribute("studentLoaded", student);
+
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/update-student.jsp");
+			dispatcher.forward(request, response);
+		}
+	}
+
+	private void addStudent(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String firstName = request.getParameter("firstName");
 		String lastName = request.getParameter("lastName");
 		String email = request.getParameter("email");
 		Student student = new Student(null, firstName, lastName, email);
 
 		studentDbUtil.newStudent(student);
+		
+		listStudents(request, response);
 	}
 
 	private void listStudents(HttpServletRequest request, HttpServletResponse response) throws Exception {
