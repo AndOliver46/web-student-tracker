@@ -104,6 +104,31 @@ public class StudentDbUtil {
 
 		return newStudent;
 	}
+	
+	public void updateStudent(Student student) {
+		Connection conn = null;
+		PreparedStatement ps = null;
+
+		try {
+			conn = dataSource.getConnection();
+
+			ps = conn.prepareStatement("UPDATE student "
+					+ "SET first_name = ?, last_name = ?, email = ? "
+					+ "WHERE id = ?");
+			ps.setString(1, student.getFirstName());
+			ps.setString(2, student.getLastName());
+			ps.setString(3, student.getEmail());
+			ps.setInt(4, student.getId());
+			
+			ps.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(null, ps, conn);
+		}
+		
+	}
 
 	private void close(ResultSet rs, PreparedStatement ps, Connection conn) {
 		try {

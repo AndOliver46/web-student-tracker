@@ -40,36 +40,46 @@ public class StudentControllerServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		try {
-			
+
 			String command = request.getParameter("command");
-			
-			if(command == null) {
-				command = "LIST";
+
+			if (command == null) {
 				listStudents(request, response);
+			} else if (command.equals("ADD")) {
+				addStudent(request, response);
+			} else if (command.equals("LOAD")) {
+				loadStudent(request, response);
+			} else if (command.equals("UPDATE")) {
+				updateStudent(request, response);
 			}
 
-			if (command.equals("ADD")) {
-				addStudent(request, response);
-			}
-			
-			if (command.equals("LOAD")) {
-				loadStudent(request, response);
-			}
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 	}
 
-	private void loadStudent(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private void updateStudent(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Integer id = Integer.parseInt(request.getParameter("studentId"));
+		String firstName = request.getParameter("firstName");
+		String lastName = request.getParameter("lastName");
+		String email = request.getParameter("email");
+		Student student = new Student(id, firstName, lastName, email);
 		
+		studentDbUtil.updateStudent(student);
+		
+		listStudents(request, response);
+	}
+
+	private void loadStudent(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		String studentId = request.getParameter("studentId");
-		if(studentId != null) {
+		if (studentId != null) {
 			Integer id = Integer.parseInt(studentId);
 			Student student = new Student(id, null, null, null);
 			student = studentDbUtil.loadStudent(student);
-			
+
 			request.setAttribute("studentLoaded", student);
 
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/update-student.jsp");
@@ -84,7 +94,7 @@ public class StudentControllerServlet extends HttpServlet {
 		Student student = new Student(null, firstName, lastName, email);
 
 		studentDbUtil.newStudent(student);
-		
+
 		listStudents(request, response);
 	}
 

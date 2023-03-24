@@ -33,7 +33,8 @@
 			<label for="email">E-mail</label><br>
 			<input type="text" name="email" required="required" value="${student.email}"><br><br>
 			
-			<input type="hidden" name="command" value="ADD">
+			<input type="hidden" name="studentId" value="${student.id}">
+			<input type="hidden" name="command" value="UPDATE">
 			
 			<input type="submit" value="Save">
 			<button><a href="StudentControllerServlet">Back to list</a></button>
