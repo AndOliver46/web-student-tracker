@@ -35,6 +35,11 @@ a {
 	color: #000;
 }
 
+td a {
+	color: blue;
+}
+
+
 label {
 	font-size: 12px;
 }
