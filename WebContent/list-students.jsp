@@ -22,7 +22,7 @@
 
 <section id="container">
 	<div id="content">
-		<table border="1" id="table">
+		<table border="1">
 		<tr>
 			<th>First Name</th>
 			<th>Last Name</th>
@@ -36,7 +36,9 @@
 			</tr>
 		</c:forEach>
 		</table>
+		<button class="add-student-button"><a href="add-student.jsp">Add Student</a></button>
 	</div>
+	
 </section>
 
 

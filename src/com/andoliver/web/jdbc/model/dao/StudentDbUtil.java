@@ -50,6 +50,28 @@ public class StudentDbUtil {
 		return students;
 	}
 
+	public void newStudent(String firstName, String lastName, String email) {
+
+		Connection conn = null;
+		PreparedStatement ps = null;
+
+		try {
+			conn = dataSource.getConnection();
+
+			ps = conn.prepareStatement("INSERT INTO student(first_name, last_name, email) VALUES (?, ?, ?)");
+			ps.setString(1, firstName);
+			ps.setString(2, lastName);
+			ps.setString(3, email);
+
+			ps.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(null, ps, conn);
+		}
+	}
+
 	private void close(ResultSet rs, PreparedStatement ps, Connection conn) {
 		try {
 			if (rs != null) {

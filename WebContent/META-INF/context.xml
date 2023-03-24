@@ -9,7 +9,7 @@
 	  
 	  username="webstudent" password="webstudent" 
 	  driverClassName="com.mysql.cj.jdbc.Driver"
-	  url="jdbc:mysql://localhost:3306/web_student_tracker?useSSL=false&amp;serverTimezone=UTC"
+	  url="jdbc:mysql://localhost:3306/web_student_tracker?useSSL=false&amp;serverTimezone=UTC&amp;allowPublicKeyRetrieval=true"
   />
   
 </Context>
