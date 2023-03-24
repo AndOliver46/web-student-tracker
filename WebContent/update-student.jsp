@@ -24,20 +24,22 @@
 		<form method="get" action="StudentControllerServlet" id="add-form">
 			<p>Update Student</p>
 		
-			<label for="firstName">First name</label><br>
-			<input type="text" name="firstName" required="required" value="${student.firstName}"><br><br>
+			<label for="firstName">First name</label>
+			<input type="text" name="firstName" required="required" value="${student.firstName}"><br>
 
-			<label for="lastName">Last name</label><br>
-			<input type="text" name="lastName" required="required" value="${student.lastName}"><br><br>
+			<label for="lastName">Last name</label>
+			<input type="text" name="lastName" required="required" value="${student.lastName}"><br>
 			
-			<label for="email">E-mail</label><br>
-			<input type="text" name="email" required="required" value="${student.email}"><br><br>
+			<label for="email">E-mail</label>
+			<input type="text" name="email" required="required" value="${student.email}"><br>
 			
 			<input type="hidden" name="studentId" value="${student.id}">
 			<input type="hidden" name="command" value="UPDATE">
 			
-			<input type="submit" value="Save">
-			<button><a href="StudentControllerServlet">Back to list</a></button>
+			<div class="form-buttons">
+				<input type="submit" value="Save">
+				<button><a href="StudentControllerServlet">Back to list</a></button>
+			</div>
 		</form>
 	</div>
 </section>
