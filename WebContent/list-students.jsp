@@ -30,8 +30,14 @@
 			<th>Action</th>
 		</tr>
 		<c:forEach var="student" items="${students}">
+		
 			<c:url var="tempLink" value="StudentControllerServlet">
 				<c:param name="command" value="LOAD"/>
+				<c:param name="studentId" value="${student.getId()}"/>
+			</c:url>
+			
+			<c:url var="tempDeleteLink" value="StudentControllerServlet">
+				<c:param name="command" value="DELETE"/>
 				<c:param name="studentId" value="${student.getId()}"/>
 			</c:url>
 		
@@ -39,8 +45,13 @@
 				<td>${student.getFirstName()}</td>
 				<td>${student.getLastName()}</td>
 				<td>${student.getEmail()}</td>
-				<td><a href="${tempLink}">Update</a></td>
+				<td>
+					<a href="${tempLink}">Update</a> 
+					| 
+					<a href="${tempDeleteLink}" onclick="return (confirm('Are you sure you want to delete htis student?'))">Delete</a>
+				</td>
 			</tr>
+			
 		</c:forEach>
 		</table>
 		<button class="add-student-button"><a href="add-student.jsp">Add Student</a></button>
