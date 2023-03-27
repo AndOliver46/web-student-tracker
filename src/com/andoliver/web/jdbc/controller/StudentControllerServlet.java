@@ -51,12 +51,22 @@ public class StudentControllerServlet extends HttpServlet {
 				loadStudent(request, response);
 			} else if (command.equals("UPDATE")) {
 				updateStudent(request, response);
+			} else if (command.equals("DELETE")) {
+				deleteStudent(request, response);
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
+	}
+	
+	private void deleteStudent(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Integer id = Integer.parseInt(request.getParameter("studentId"));
+		
+		studentDbUtil.deleteStudent(id);
+		
+		listStudents(request, response);
 	}
 
 	private void updateStudent(HttpServletRequest request, HttpServletResponse response) throws Exception {

@@ -30,7 +30,7 @@ public class StudentDbUtil {
 			conn = dataSource.getConnection();
 			ps = conn.prepareStatement("SELECT * FROM student");
 			rs = ps.executeQuery();
-			
+
 			while (rs.next()) {
 
 				Integer id = rs.getInt("id");
@@ -86,7 +86,7 @@ public class StudentDbUtil {
 			ps = conn.prepareStatement("SELECT * FROM student WHERE id = ?");
 			ps.setInt(1, student.getId());
 			rs = ps.executeQuery();
-			
+
 			while (rs.next()) {
 
 				Integer id = rs.getInt("id");
@@ -104,7 +104,7 @@ public class StudentDbUtil {
 
 		return newStudent;
 	}
-	
+
 	public void updateStudent(Student student) {
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -112,22 +112,40 @@ public class StudentDbUtil {
 		try {
 			conn = dataSource.getConnection();
 
-			ps = conn.prepareStatement("UPDATE student "
-					+ "SET first_name = ?, last_name = ?, email = ? "
-					+ "WHERE id = ?");
+			ps = conn.prepareStatement(
+					"UPDATE student " + "SET first_name = ?, last_name = ?, email = ? " + "WHERE id = ?");
 			ps.setString(1, student.getFirstName());
 			ps.setString(2, student.getLastName());
 			ps.setString(3, student.getEmail());
 			ps.setInt(4, student.getId());
-			
+
 			ps.executeUpdate();
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			close(null, ps, conn);
 		}
-		
+	}
+
+	public void deleteStudent(Integer id) {
+
+		Connection conn = null;
+		PreparedStatement ps = null;
+
+		try {
+			conn = dataSource.getConnection();
+
+			ps = conn.prepareStatement("DELETE FROM student WHERE id = ?");
+			ps.setInt(1, id);
+
+			ps.execute();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(null, ps, conn);
+		}
+
 	}
 
 	private void close(ResultSet rs, PreparedStatement ps, Connection conn) {
